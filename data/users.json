@@ -1,0 +1,43 @@
+{
+  "users": {
+    "user_1": {
+      "id": "user_1",
+      "email": "test@example.com",
+      "password": "$2b$10$PIerAj1.0bvGuLuD0yIK3uO2SdnTTu/qglEGXqd9TcjaVwhuRHog6",
+      "username": "testuser",
+      "plan": "free",
+      "stripeCustomerId": null,
+      "stripeSubscriptionId": null,
+      "createdAt": "2025-07-30T22:03:25.411Z",
+      "updatedAt": "2025-07-30T22:03:57.655Z",
+      "lastLogin": "2025-07-30T22:03:57.654Z",
+      "isActive": true,
+      "metadata": {
+        "videosGenerated": 0,
+        "totalUsage": 0,
+        "monthlyUsage": 0,
+        "lastResetDate": "2025-07-30T22:03:25.411Z"
+      }
+    },
+    "user_2": {
+      "id": "user_2",
+      "email": "test2@mail.com",
+      "password": "$2b$10$FapIdgkVzml1J0BHG1XFWOIrb.LFO8sRg0pAJPUkUhPi.CXucy6Qm",
+      "username": "test",
+      "plan": "free",
+      "stripeCustomerId": null,
+      "stripeSubscriptionId": null,
+      "createdAt": "2025-07-31T15:46:57.169Z",
+      "updatedAt": "2025-07-31T15:46:57.169Z",
+      "lastLogin": null,
+      "isActive": true,
+      "metadata": {
+        "videosGenerated": 0,
+        "totalUsage": 0,
+        "monthlyUsage": 0,
+        "lastResetDate": "2025-07-31T15:46:57.169Z"
+      }
+    }
+  },
+  "nextId": 3
+}

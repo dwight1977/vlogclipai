@@ -1,0 +1,134 @@
+{
+  "timestamp": "2025-07-24T14:21:33.124Z",
+  "summary": {
+    "proxyTests": {
+      "total": 3,
+      "successful": 0,
+      "failed": 3
+    },
+    "userAgentTests": {
+      "total": 5,
+      "successful": 5,
+      "failed": 0
+    },
+    "rateLimitTests": {
+      "totalRequests": 10,
+      "successCount": 0,
+      "rateLimitCount": 0,
+      "errorCount": 10,
+      "rateLimitTriggered": false
+    },
+    "fallbackTests": {
+      "total": 3,
+      "primarySuccessful": 3,
+      "fallbackSuccessful": 0,
+      "totalFailed": 0
+    }
+  },
+  "detailedResults": {
+    "proxyTests": [
+      {
+        "proxy": "http://residential-proxy-1:8080",
+        "status": "failed",
+        "duration": null,
+        "videoTitle": null,
+        "error": "getaddrinfo ENOTFOUND residential-proxy-1"
+      },
+      {
+        "proxy": "http://residential-proxy-2:8080",
+        "status": "failed",
+        "duration": null,
+        "videoTitle": null,
+        "error": "getaddrinfo ENOTFOUND residential-proxy-2"
+      },
+      {
+        "proxy": "socks5://residential-proxy-3:1080",
+        "status": "failed",
+        "duration": null,
+        "videoTitle": null,
+        "error": "getaddrinfo ENOTFOUND residential-proxy-3"
+      }
+    ],
+    "userAgentTests": [
+      {
+        "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWeb...",
+        "status": "success",
+        "duration": 4497,
+        "videoTitle": "Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)",
+        "error": null
+      },
+      {
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) Ap...",
+        "status": "success",
+        "duration": 3301,
+        "videoTitle": "Me at the zoo",
+        "error": null
+      },
+      {
+        "userAgent": "Mozilla/5.0 (iPhone; CPU iPhone OS 17_7 like Mac O...",
+        "status": "success",
+        "duration": 4805,
+        "videoTitle": "PSY - GANGNAM STYLE(강남스타일) M/V",
+        "error": null
+      },
+      {
+        "userAgent": "Mozilla/5.0 (Android 14; Mobile; rv:132.0) Gecko/1...",
+        "status": "success",
+        "duration": 4344,
+        "videoTitle": "Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)",
+        "error": null
+      },
+      {
+        "userAgent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36...",
+        "status": "success",
+        "duration": 2965,
+        "videoTitle": "Me at the zoo",
+        "error": null
+      }
+    ],
+    "rateLimitTests": [
+      {
+        "totalRequests": 10,
+        "successCount": 0,
+        "rateLimitCount": 0,
+        "errorCount": 10,
+        "rateLimitTriggered": false
+      }
+    ],
+    "fallbackTests": [
+      {
+        "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "primaryMethod": "success",
+        "fallbackMethod": "not_needed",
+        "finalResult": "success",
+        "title": "Rick Astley - Never Gonna Give You Up (Official Video) (4K Remaster)"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=jNQXAC9IVRw",
+        "primaryMethod": "success",
+        "fallbackMethod": "not_needed",
+        "finalResult": "success",
+        "title": "Me at the zoo"
+      },
+      {
+        "url": "https://www.youtube.com/watch?v=9bZkp7q19f0",
+        "primaryMethod": "success",
+        "fallbackMethod": "not_needed",
+        "finalResult": "success",
+        "title": "PSY - GANGNAM STYLE(강남스타일) M/V"
+      }
+    ]
+  },
+  "recommendations": [
+    {
+      "type": "proxy",
+      "message": "No residential proxies working. Consider upgrading proxy service.",
+      "priority": "critical"
+    },
+    {
+      "type": "user_agent",
+      "message": "5 user agents working. Continue rotation strategy.",
+      "priority": "medium"
+    }
+  ]
+}

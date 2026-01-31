@@ -1,0 +1,60 @@
+{
+  "systemInfo": {
+    "externalIP": "208.127.55.175",
+    "location": {}
+  },
+  "networkTests": {
+    "https://www.youtube.com": "OK",
+    "https://youtube.com": "BLOCKED",
+    "https://m.youtube.com": "BLOCKED",
+    "https://youtubei.googleapis.com": "BLOCKED"
+  },
+  "ytdlCoreTests": {},
+  "ytDlpTests": {
+    "version": "2025.07.21"
+  },
+  "rateLimit": {
+    "requests": [
+      {
+        "success": true,
+        "time": 3560
+      },
+      {
+        "success": true,
+        "time": 3446
+      },
+      {
+        "success": true,
+        "time": 7147
+      }
+    ]
+  },
+  "solutions": [
+    {
+      "strategy": "Default yt-dlp",
+      "command": "\"/Library/Frameworks/Python.framework/Versions/3.13/bin/yt-dlp\" --dump-json --no-warnings",
+      "status": "SUCCESS"
+    },
+    {
+      "strategy": "With random user agent",
+      "command": "\"/Library/Frameworks/Python.framework/Versions/3.13/bin/yt-dlp\" --dump-json --user-agent \"Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36\"",
+      "status": "SUCCESS"
+    },
+    {
+      "strategy": "Mobile client",
+      "command": "\"/Library/Frameworks/Python.framework/Versions/3.13/bin/yt-dlp\" --dump-json --extractor-args \"youtube:player_client=mweb\"",
+      "status": "SUCCESS"
+    },
+    {
+      "strategy": "Android client",
+      "command": "\"/Library/Frameworks/Python.framework/Versions/3.13/bin/yt-dlp\" --dump-json --extractor-args \"youtube:player_client=android\"",
+      "status": "SUCCESS"
+    },
+    {
+      "strategy": "With cookies (if available)",
+      "command": "\"/Library/Frameworks/Python.framework/Versions/3.13/bin/yt-dlp\" --dump-json --cookies-from-browser chrome",
+      "status": "FAILED",
+      "error": "Timeout"
+    }
+  ]
+}

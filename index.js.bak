@@ -1,0 +1,270 @@
+const express = require('express');
+const ytdl = require('ytdl-core');
+const fs = require('fs');
+const path = require('path');
+const { OpenAI } = require('openai');
+require('dotenv').config();
+
+// Initialize app
+const app = express();
+app.use(express.json());
+
+// OpenAI client
+const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+// Progress tracking
+let progress = {
+  status: 'idle',
+  step: '',
+  progress: 0,
+  message: ''
+};
+
+const updateProgress = (status, step, progress, message) => {
+  progress = {
+    status,
+    step,
+    progress,
+    message
+  };
+  console.log(`Progress: ${step} - ${progress}% - ${message}`);
+};
+
+// Helper functions
+const clipPrompt = (transcript) => `
+You are a social media strategist. Given this transcript:
+
+"${transcript}"
+
+1. Extract 1 highlight moment (max 30 sec).
+2. Create a bold, emotional headline.
+3. Add platform-specific captions:
+- TikTok (emoji + hashtag),
+- Twitter (concise, punchy),
+- LinkedIn (professional takeaway).
+
+Return JSON in this format:
+{
+  "timestamp": "HH:MM:SS - HH:MM:SS",
+  "headline": "Brief headline...",
+  "captions": {
+    "tiktok": "Caption with emojis and hashtags",
+    "twitter": "Tweet with hashtags",
+    "linkedin": "Professional summary"
+  }
+}
+`;
+
+// API endpoints
+app.get('/api/progress', (req, res) => {
+  res.json(progress);
+});
+
+app.post('/api/generate', async (req, res) => {
+  const { videoUrl } = req.body;
+  const audioPath = path.join(__dirname, 'audio.mp3');
+
+  try {
+    // Validate video URL
+    if (!videoUrl || !videoUrl.trim()) {
+      return res.status(400).json({ error: 'Video URL is required' });
+    }
+
+    // Start audio download
+    updateProgress('processing', 'downloading_audio', 10, 'Downloading audio');
+    const stream = ytdl(videoUrl, { filter: 'audioonly' });
+    const writeStream = fs.createWriteStream(audioPath);
+
+    // Track download progress
+    stream.on('data', (chunk) => {
+      const progress = Math.round((writeStream.bytesWritten / (writeStream.bytesWritten + chunk.length)) * 100);
+      updateProgress('processing', 'downloading_audio', progress, `Downloading audio: ${progress}%`);
+    });
+
+    stream.pipe(writeStream);
+
+    writeStream.on('finish', async () => {
+      // Start transcription
+      updateProgress('processing', 'transcribing', 30, 'Transcribing audio');
+      const transcription = await openai.audio.transcriptions.create({
+        file: fs.createReadStream(audioPath),
+        model: 'whisper-1',
+      });
+
+      const transcriptText = transcription.text;
+
+      // Generate highlight using GPT
+      updateProgress('processing', 'generating_highlight', 50, 'Generating highlight');
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4',
+        messages: [
+          { role: 'user', content: clipPrompt(transcriptText) }
+        ],
+        temperature: 0.8,
+      });
+
+      // Parse and validate the response
+      try {
+        const clipData = JSON.parse(completion.choices[0].message.content);
+        
+        // Validate required fields
+        if (!clipData.timestamp || !clipData.headline || !clipData.captions) {
+          throw new Error('Invalid clip data format');
+        }
+
+        updateProgress('completed', 'done', 100, 'Processing complete');
+        return res.json({ clips: [clipData] });
+      } catch (error) {
+        console.error('Error parsing clip data:', error);
+        res.status(500).json({ 
+          error: 'Failed to parse highlight data',
+          details: error.message 
+        });
+      }
+    });
+  } catch (error) {
+    console.error('Error processing video:', error);
+    updateProgress('error', 'failed', 0, 'Processing failed');
+    res.status(500).json({ 
+      error: 'Failed to generate highlights',
+      details: error.message 
+    });
+  }
+});
+
+app.listen(3001, () => console.log('API running on port 3001'));
+
+app.post('/api/generate', async (req, res) => {
+  const { videoUrl } = req.body;
+  const audioPath = path.join(__dirname, 'audio.mp3');
+
+  try {
+    // Validate video URL
+    if (!videoUrl || !videoUrl.trim()) {
+      return res.status(400).json({ error: 'Video URL is required' });
+    }
+
+    // Start audio download
+    updateProgress('processing', 'downloading_audio', 10, 'Downloading audio');
+    const stream = ytdl(videoUrl, { filter: 'audioonly' });
+    const writeStream = fs.createWriteStream(audioPath);
+
+    // Track download progress
+    stream.on('data', (chunk) => {
+      const progress = Math.round((writeStream.bytesWritten / (writeStream.bytesWritten + chunk.length)) * 100);
+      updateProgress('processing', 'downloading_audio', progress, `Downloading audio: ${progress}%`);
+    });
+
+    stream.pipe(writeStream);
+
+    writeStream.on('finish', async () => {
+      // Start transcription
+      updateProgress('processing', 'transcribing', 30, 'Transcribing audio');
+      const transcription = await openai.audio.transcriptions.create({
+        file: fs.createReadStream(audioPath),
+        model: 'whisper-1',
+      });
+
+      const transcriptText = transcription.text;
+
+      // Generate highlight using GPT
+      updateProgress('processing', 'generating_highlight', 50, 'Generating highlight');
+      const completion = await openai.chat.completions.create({
+        model: 'gpt-4',
+        messages: [
+          { role: 'user', content: clipPrompt(transcriptText) }
+        ],
+        temperature: 0.8,
+      });
+
+      // Parse and validate the response
+      try {
+        const clipData = JSON.parse(completion.choices[0].message.content);
+        
+        // Validate required fields
+        if (!clipData.timestamp || !clipData.headline || !clipData.captions) {
+          throw new Error('Invalid clip data format');
+        }
+
+        updateProgress('completed', 'done', 100, 'Processing complete');
+        return res.json({ clips: [clipData] });
+      } catch (error) {
+        console.error('Error parsing clip data:', error);
+        res.status(500).json({ 
+          error: 'Failed to parse highlight data',
+          details: error.message 
+        });
+      }
+    });
+  } catch (error) {
+    console.error('Error processing video:', error);
+    updateProgress('error', 'failed', 0, 'Processing failed');
+    res.status(500).json({ 
+      error: 'Failed to generate highlights',
+      details: error.message 
+    });
+  }
+});
+
+app.listen(3001, () => console.log('API running on port 3001'));
+
+// Configuration
+const PORT = process.env.PORT || 3001;
+const MAX_CLIPS = parseInt(process.env.MAX_CLIPS) || 5;
+const MAX_CLIP_DURATION = parseInt(process.env.MAX_CLIP_DURATION) || 30;
+const MIN_CLIP_DURATION = parseInt(process.env.MIN_CLIP_DURATION) || 10;
+
+// Create uploads directory if it doesn't exist
+const uploadDir = path.join(__dirname, 'uploads');
+if (!fs.existsSync(uploadDir)) {
+  fs.mkdirSync(uploadDir);
+}
+
+// Helper functions
+const generateClipFilename = (timestamp) => {
+  const timestampStr = timestamp.replace(/:/g, '-').replace(' ', '_');
+  return `clip_${timestampStr}.mp4`;
+};
+
+const cutVideoClip = async (videoUrl, startTime, endTime, outputFilename) => {
+  return new Promise((resolve, reject) => {
+    const outputPath = path.join(uploadDir, outputFilename);
+    
+    ffmpeg(videoUrl)
+      .setStartTime(startTime)
+      .setDuration(endTime - startTime)
+      .output(outputPath)
+      .on('end', () => {
+        console.log(`Clip created: ${outputPath}`);
+        resolve(outputPath);
+      })
+      .on('error', (err) => {
+        console.error('Error creating clip:', err);
+        reject(err);
+      })
+      .run();
+  });
+};
+
+// Progress tracking
+let currentProgress = {
+  status: 'idle',
+  step: '',
+  progress: 0,
+  message: ''
+};
+
+const updateProgress = (status, step, progress, message) => {
+  currentProgress = {
+    status,
+    step,
+    progress,
+    message
+  };
+  console.log(`Progress: ${step} - ${progress}% - ${message}`);
+};
+
+// Initialize app
+const app = express();
+app.use(cors());
+app.use(express.json());

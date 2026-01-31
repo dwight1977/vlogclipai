@@ -1,0 +1,16 @@
+// COPY AND PASTE THIS INTO YOUR BROWSER CONSOLE TO RESET FREE TIER:
+localStorage.removeItem("vlogclip_user");
+localStorage.setItem("vlogclip_user", JSON.stringify({
+  "plan": "starter",
+  "isAuthenticated": false,
+  "userId": "anon_1753516179518_miy9qix6t",
+  "usage": {
+    "clipsToday": 0,
+    "videosThisMonth": 0,
+    "lastResetDate": "Sat Jul 26 2025",
+    "lastMonthlyReset": 6
+  }
+}));
+sessionStorage.clear();
+window.location.reload();
+console.log("✅ FREE TIER USAGE RESET TO 0! You can now process 3 clips and 5 videos.");
