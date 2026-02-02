@@ -1,0 +1,39 @@
+/* RYAN: Enhanced engagement summary styling */
+.engagement-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 12px;
+}
+
+.engagement-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.summary-title {
+  color: #4ecdc4;
+  font-weight: 700;
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.summary-details {
+  color: #000000;
+  font-size: 12px;
+  line-height: 1.4;
+  font-style: italic;
+  font-weight: 600;
+}
+
+.summary-metrics {
+  color: #000000;
+  font-size: 10px;
+  font-weight: 600;
+  background: rgba(78, 205, 196, 0.1);
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid rgba(78, 205, 196, 0.2);
+}

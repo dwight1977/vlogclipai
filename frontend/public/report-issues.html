@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VlogClip AI - Report Issues</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #dc3545, #fd7e14);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.1em;
+        }
+        
+        .form-container {
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #333;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+        
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .severity-selector {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-top: 8px;
+        }
+        
+        .severity-option {
+            position: relative;
+        }
+        
+        .severity-option input[type="radio"] {
+            position: absolute;
+            opacity: 0;
+        }
+        
+        .severity-option label {
+            display: block;
+            padding: 10px;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .severity-option input[type="radio"]:checked + label {
+            border-color: #667eea;
+            background: #667eea;
+            color: white;
+        }
+        
+        .severity-low label { border-color: #28a745; }
+        .severity-low input:checked + label { background: #28a745; border-color: #28a745; }
+        
+        .severity-medium label { border-color: #ffc107; }
+        .severity-medium input:checked + label { background: #ffc107; border-color: #ffc107; color: #333; }
+        
+        .severity-high label { border-color: #dc3545; }
+        .severity-high input:checked + label { background: #dc3545; border-color: #dc3545; }
+        
+        .submit-section {
+            background: #f8f9fa;
+            padding: 30px;
+            margin: 0 -40px -40px -40px;
+            border-top: 1px solid #e9ecef;
+        }
+        
+        .submit-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #dc3545, #fd7e14);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(220, 53, 69, 0.3);
+        }
+        
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .success-message {
+            display: none;
+            background: #d4edda;
+            color: #155724;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #c3e6cb;
+        }
+        
+        .error-message {
+            display: none;
+            background: #f8d7da;
+            color: #721c24;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c6cb;
+        }
+        
+        .required {
+            color: #dc3545;
+        }
+        
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .severity-selector {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-container {
+                padding: 20px;
+            }
+            
+            .submit-section {
+                padding: 20px;
+                margin: 0 -20px -20px -20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🐛 Report Issues</h1>
+            <p>Help us improve VlogClip AI by reporting any issues you encounter</p>
+        </div>
+        
+        <div class="form-container">
+            <div class="success-message" id="successMessage">
+                <h3>✅ Issue Reported Successfully!</h3>
+                <p>Thank you for your report. Our support team will review it and get back to you within 24 hours.</p>
+            </div>
+            
+            <div class="error-message" id="errorMessage">
+                <h3>❌ Submission Failed</h3>
+                <p id="errorText">There was an error submitting your report. Please try again.</p>
+            </div>
+            
+            <form id="issueForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="userName">User Account Name <span class="required">*</span></label>
+                        <input type="text" id="userName" name="userName" required placeholder="Enter your account name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="userEmail">Email Address <span class="required">*</span></label>
+                        <input type="email" id="userEmail" name="userEmail" required placeholder="your.email@example.com">
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="deviceType">Device Type <span class="required">*</span></label>
+                        <select id="deviceType" name="deviceType" required>
+                            <option value="">Select your device</option>
+                            <option value="Windows Desktop">Windows Desktop</option>
+                            <option value="Mac Desktop">Mac Desktop</option>
+                            <option value="Linux Desktop">Linux Desktop</option>
+                            <option value="iPhone">iPhone</option>
+                            <option value="iPad">iPad</option>
+                            <option value="Android Phone">Android Phone</option>
+                            <option value="Android Tablet">Android Tablet</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="browser">Browser <span class="required">*</span></label>
+                        <select id="browser" name="browser" required>
+                            <option value="">Select your browser</option>
+                            <option value="Chrome">Google Chrome</option>
+                            <option value="Firefox">Mozilla Firefox</option>
+                            <option value="Safari">Safari</option>
+                            <option value="Edge">Microsoft Edge</option>
+                            <option value="Opera">Opera</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="incidentDate">Date of Incident <span class="required">*</span></label>
+                        <input type="date" id="incidentDate" name="incidentDate" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="incidentTime">Approximate Time</label>
+                        <input type="time" id="incidentTime" name="incidentTime" placeholder="HH:MM">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="issueCategory">Issue Category <span class="required">*</span></label>
+                    <select id="issueCategory" name="issueCategory" required>
+                        <option value="">Select issue category</option>
+                        <option value="Video Processing Error">Video Processing Error</option>
+                        <option value="Upload/Download Issues">Upload/Download Issues</option>
+                        <option value="Payment/Billing">Payment/Billing</option>
+                        <option value="Account Access">Account Access</option>
+                        <option value="API Integration">API Integration</option>
+                        <option value="Performance Issues">Performance Issues</option>
+                        <option value="User Interface Bug">User Interface Bug</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label>Issue Severity <span class="required">*</span></label>
+                    <div class="severity-selector">
+                        <div class="severity-option severity-low">
+                            <input type="radio" id="severityLow" name="severity" value="Low" required>
+                            <label for="severityLow">🟢 Low<br><small>Minor inconvenience</small></label>
+                        </div>
+                        <div class="severity-option severity-medium">
+                            <input type="radio" id="severityMedium" name="severity" value="Medium" required>
+                            <label for="severityMedium">🟡 Medium<br><small>Affects functionality</small></label>
+                        </div>
+                        <div class="severity-option severity-high">
+                            <input type="radio" id="severityHigh" name="severity" value="High" required>
+                            <label for="severityHigh">🔴 High<br><small>Blocks usage</small></label>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="issueDescription">Detailed Description of the Problem <span class="required">*</span></label>
+                    <textarea 
+                        id="issueDescription" 
+                        name="issueDescription" 
+                        required 
+                        placeholder="Please describe what happened, what you expected to happen, and any error messages you saw..."
+                    ></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="stepsToReproduce">Steps to Reproduce (if applicable)</label>
+                    <textarea 
+                        id="stepsToReproduce" 
+                        name="stepsToReproduce" 
+                        placeholder="1. First I did...&#10;2. Then I clicked...&#10;3. The error occurred when..."
+                    ></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="additionalInfo">Additional Information</label>
+                    <textarea 
+                        id="additionalInfo" 
+                        name="additionalInfo" 
+                        placeholder="Any other details that might help us resolve this issue..."
+                    ></textarea>
+                </div>
+            </form>
+        </div>
+        
+        <div class="submit-section">
+            <button type="submit" class="submit-btn" id="submitBtn" form="issueForm">
+                📧 Submit Issue Report
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Set today's date as default
+        document.getElementById('incidentDate').valueAsDate = new Date();
+        
+        // Auto-detect browser
+        const browserDetection = () => {
+            const userAgent = navigator.userAgent;
+            if (userAgent.includes('Chrome') && !userAgent.includes('Edg')) return 'Chrome';
+            if (userAgent.includes('Firefox')) return 'Firefox';
+            if (userAgent.includes('Safari') && !userAgent.includes('Chrome')) return 'Safari';
+            if (userAgent.includes('Edg')) return 'Edge';
+            if (userAgent.includes('Opera')) return 'Opera';
+            return 'Other';
+        };
+        
+        document.getElementById('browser').value = browserDetection();
+        
+        // Auto-detect device type
+        const deviceDetection = () => {
+            const userAgent = navigator.userAgent;
+            if (/iPad/.test(userAgent)) return 'iPad';
+            if (/iPhone/.test(userAgent)) return 'iPhone';
+            if (/Android.*Mobile/.test(userAgent)) return 'Android Phone';
+            if (/Android/.test(userAgent)) return 'Android Tablet';
+            if (/Macintosh/.test(userAgent)) return 'Mac Desktop';
+            if (/Windows/.test(userAgent)) return 'Windows Desktop';
+            if (/Linux/.test(userAgent)) return 'Linux Desktop';
+            return 'Other';
+        };
+        
+        document.getElementById('deviceType').value = deviceDetection();
+        
+        // Form submission
+        document.getElementById('issueForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = document.getElementById('submitBtn');
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            
+            // Hide previous messages
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            
+            // Disable submit button
+            submitBtn.disabled = true;
+            submitBtn.textContent = '📤 Submitting...';
+            
+            // Collect form data
+            const formData = new FormData(e.target);
+            const issueData = Object.fromEntries(formData.entries());
+            
+            // Add timestamp
+            issueData.submittedAt = new Date().toISOString();
+            issueData.userAgent = navigator.userAgent;
+            issueData.screenResolution = `${screen.width}x${screen.height}`;
+            issueData.timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+            
+            try {
+                // Create email body
+                const emailBody = `
+VlogClip AI Issue Report
+========================
+
+USER INFORMATION:
+- Account Name: ${issueData.userName}
+- Email: ${issueData.userEmail}
+- Submission Time: ${new Date(issueData.submittedAt).toLocaleString()}
+
+TECHNICAL DETAILS:
+- Device Type: ${issueData.deviceType}
+- Browser: ${issueData.browser}
+- User Agent: ${issueData.userAgent}
+- Screen Resolution: ${issueData.screenResolution}
+- Timezone: ${issueData.timezone}
+
+INCIDENT DETAILS:
+- Date: ${issueData.incidentDate}
+- Time: ${issueData.incidentTime || 'Not specified'}
+- Category: ${issueData.issueCategory}
+- Severity: ${issueData.severity}
+
+ISSUE DESCRIPTION:
+${issueData.issueDescription}
+
+STEPS TO REPRODUCE:
+${issueData.stepsToReproduce || 'Not provided'}
+
+ADDITIONAL INFORMATION:
+${issueData.additionalInfo || 'None provided'}
+
+---
+This report was automatically generated by VlogClip AI Issue Reporter.
+                `.trim();
+                
+                // Create mailto link
+                const subject = `VlogClip AI Issue Report - ${issueData.issueCategory} (${issueData.severity} Priority)`;
+                const mailto = `mailto:dwighth@hotmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(emailBody)}`;
+                
+                // Open email client
+                window.open(mailto);
+                
+                // Show success message
+                successMsg.style.display = 'block';
+                successMsg.scrollIntoView({ behavior: 'smooth' });
+                
+                // Reset form
+                e.target.reset();
+                
+                // Re-set auto-detected values
+                document.getElementById('incidentDate').valueAsDate = new Date();
+                document.getElementById('browser').value = browserDetection();
+                document.getElementById('deviceType').value = deviceDetection();
+                
+            } catch (error) {
+                console.error('Error submitting report:', error);
+                errorMsg.style.display = 'block';
+                document.getElementById('errorText').textContent = 
+                    'There was an error creating your report. Please try again or contact support directly at dwighth@hotmail.com';
+                errorMsg.scrollIntoView({ behavior: 'smooth' });
+            } finally {
+                // Re-enable submit button
+                submitBtn.disabled = false;
+                submitBtn.textContent = '📧 Submit Issue Report';
+            }
+        });
+    </script>
+</body>
+</html>

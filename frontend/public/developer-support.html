@@ -1,0 +1,421 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VlogClip AI - Developer Support</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #28a745, #20c997);
+            color: white;
+            padding: 40px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+        
+        .header p {
+            opacity: 0.9;
+            font-size: 1.2em;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .content {
+            padding: 40px;
+        }
+        
+        .support-section {
+            margin-bottom: 40px;
+        }
+        
+        .support-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+            border-bottom: 2px solid #28a745;
+            padding-bottom: 10px;
+        }
+        
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin: 30px 0;
+        }
+        
+        .contact-card {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 25px;
+            border: 2px solid #e9ecef;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-color: #28a745;
+        }
+        
+        .contact-card h3 {
+            color: #28a745;
+            margin-bottom: 15px;
+            font-size: 1.4em;
+        }
+        
+        .contact-card p {
+            color: #666;
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+        
+        .contact-card .email {
+            background: #28a745;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-card .email:hover {
+            background: #218838;
+            transform: translateY(-2px);
+        }
+        
+        .hours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .hours-item {
+            background: #e7f3ff;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        
+        .hours-item h4 {
+            color: #0066cc;
+            margin-bottom: 10px;
+        }
+        
+        .hours-item p {
+            color: #333;
+            font-weight: 500;
+        }
+        
+        .faq-section {
+            background: #f8f9fa;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .faq-item {
+            margin-bottom: 25px;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 20px;
+        }
+        
+        .faq-item:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        .faq-question {
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .faq-answer {
+            color: #666;
+            line-height: 1.6;
+        }
+        
+        .faq-answer code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .quick-links {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin: 30px 0;
+        }
+        
+        .quick-links h3 {
+            margin-bottom: 20px;
+            font-size: 1.5em;
+        }
+        
+        .links-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .quick-link {
+            background: rgba(255,255,255,0.1);
+            padding: 15px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+        
+        .quick-link:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+        
+        .emergency-contact {
+            background: #dc3545;
+            color: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .emergency-contact h3 {
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        
+        .emergency-contact p {
+            margin-bottom: 15px;
+            opacity: 0.9;
+        }
+        
+        .emergency-contact .emergency-email {
+            background: white;
+            color: #dc3545;
+            padding: 12px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+        
+        .emergency-contact .emergency-email:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .header h1 {
+                font-size: 2em;
+            }
+            
+            .content {
+                padding: 30px 20px;
+            }
+            
+            .contact-grid,
+            .hours-grid,
+            .links-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💬 Developer Support</h1>
+            <p>Get expert help with VlogClip AI API integration and technical questions from our dedicated developer support team</p>
+        </div>
+        
+        <div class="content">
+            <div class="support-section">
+                <h2>🚀 How We Can Help</h2>
+                <div class="contact-grid">
+                    <div class="contact-card">
+                        <h3>🔧 API Integration Support</h3>
+                        <p>Need help integrating the VlogClip AI API into your application? Our team can guide you through authentication, endpoints, and best practices.</p>
+                        <a href="mailto:api-support@vlogclip.ai?subject=API Integration Support" class="email">Contact API Team</a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3>🐛 Technical Troubleshooting</h3>
+                        <p>Experiencing technical issues, unexpected errors, or performance problems? Let us help you debug and resolve them quickly.</p>
+                        <a href="mailto:tech-support@vlogclip.ai?subject=Technical Issue" class="email">Get Technical Help</a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3>📖 Documentation & Examples</h3>
+                        <p>Looking for code examples, detailed documentation, or implementation guidance? We provide comprehensive resources and personalized help.</p>
+                        <a href="mailto:docs@vlogclip.ai?subject=Documentation Request" class="email">Request Documentation</a>
+                    </div>
+                    
+                    <div class="contact-card">
+                        <h3>⚡ Performance Optimization</h3>
+                        <p>Want to optimize your integration for better performance, handle rate limits effectively, or implement best practices?</p>
+                        <a href="mailto:performance@vlogclip.ai?subject=Performance Optimization" class="email">Optimize Performance</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="support-section">
+                <h2>🕒 Support Hours</h2>
+                <div class="hours-grid">
+                    <div class="hours-item">
+                        <h4>📧 Email Support</h4>
+                        <p>24/7 Available</p>
+                        <small>Response within 4-6 hours</small>
+                    </div>
+                    
+                    <div class="hours-item">
+                        <h4>💬 Live Chat</h4>
+                        <p>Mon-Fri: 9AM-6PM EST</p>
+                        <small>Instant responses</small>
+                    </div>
+                    
+                    <div class="hours-item">
+                        <h4>📞 Priority Support</h4>
+                        <p>Business Plan: 1-2 hours</p>
+                        <small>Critical issues only</small>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="faq-section">
+                <h2>❓ Frequently Asked Questions</h2>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I get started with the API?</div>
+                    <div class="faq-answer">
+                        First, ensure you have a Business plan. Then check the API documentation and start with a simple test request to <code>/api/generate</code>. Our team can provide personalized onboarding if needed.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">What are the rate limits for API requests?</div>
+                    <div class="faq-answer">
+                        Business plan users get 100 requests per minute and 1000 videos per day. Batch processing supports up to 6 videos per request. Contact us if you need higher limits.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How long does video processing take?</div>
+                    <div class="faq-answer">
+                        Processing time varies by video length and complexity. Typical clips take 2-5 minutes, while longer videos may take up to 10 minutes. Use the <code>/api/progress</code> endpoint to track status.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">Can I customize the output video specifications?</div>
+                    <div class="faq-answer">
+                        Business plan users automatically get High Quality Processing output in 9:16 portrait format. Custom resolutions and formats are available through our enterprise solutions.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">How do I handle API errors and timeouts?</div>
+                    <div class="faq-answer">
+                        Implement exponential backoff for rate limit errors (429), validate YouTube URLs before sending, and use longer timeouts for video processing requests. Check our error handling guide for details.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="quick-links">
+                <h3>🔗 Quick Links</h3>
+                <div class="links-grid">
+                    <a href="/api-documentation.html" target="_blank" class="quick-link">📖 Full API Docs</a>
+                    <a href="https://github.com/vlogclip-ai/examples" target="_blank" class="quick-link">💻 Code Examples</a>
+                    <a href="/report-issues.html" target="_blank" class="quick-link">🐛 Report Bug</a>
+                    <a href="https://status.vlogclip.ai" target="_blank" class="quick-link">📊 Service Status</a>
+                </div>
+            </div>
+            
+            <div class="emergency-contact">
+                <h3>🚨 Critical Issues</h3>
+                <p>For production-breaking issues that require immediate attention:</p>
+                <a href="mailto:urgent@vlogclip.ai?subject=URGENT: Production Issue" class="emergency-email">
+                    🚨 Emergency Support
+                </a>
+                <p style="margin-top: 15px; font-size: 0.9em;">
+                    Please use this only for critical production issues. Include "URGENT" in your subject line.
+                </p>
+            </div>
+            
+            <div class="support-section">
+                <h2>📝 Before Contacting Support</h2>
+                <p style="margin-bottom: 20px;">To help us assist you faster, please include:</p>
+                <ul style="color: #666; line-height: 1.8; margin-left: 20px;">
+                    <li>Your Business plan account email</li>
+                    <li>Specific API endpoint you're working with</li>
+                    <li>Error messages or response codes you're seeing</li>
+                    <li>Sample request you're trying to make</li>
+                    <li>Programming language and libraries you're using</li>
+                    <li>Expected vs actual behavior</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Add click tracking for support links
+        document.querySelectorAll('a[href^="mailto:"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                console.log('Support contact clicked:', link.href);
+                // You can add analytics tracking here
+            });
+        });
+        
+        // Auto-populate user info if available
+        if (localStorage.getItem('vlogclip_user')) {
+            try {
+                const userData = JSON.parse(localStorage.getItem('vlogclip_user'));
+                console.log('User context available for support:', userData.plan);
+            } catch (e) {
+                console.log('Could not parse user data');
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VlogClip AI - Business API Documentation</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f8f9fa;
+        }
+        .header {
+            text-align: center;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        .header h1 {
+            margin: 0;
+            font-size: 2.5em;
+        }
+        .header p {
+            margin: 10px 0 0 0;
+            opacity: 0.9;
+        }
+        .section {
+            background: white;
+            padding: 25px;
+            margin: 20px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .section h2 {
+            color: #667eea;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        .section h3 {
+            color: #764ba2;
+            margin-top: 25px;
+        }
+        .endpoint {
+            background: #f8f9fa;
+            border: 1px solid #e9ecef;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .method {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.8em;
+            margin-right: 10px;
+        }
+        .method.post {
+            background: #28a745;
+            color: white;
+        }
+        .method.get {
+            background: #007bff;
+            color: white;
+        }
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+            margin: 10px 0;
+        }
+        .parameter-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 15px 0;
+        }
+        .parameter-table th,
+        .parameter-table td {
+            border: 1px solid #dee2e6;
+            padding: 12px;
+            text-align: left;
+        }
+        .parameter-table th {
+            background: #f8f9fa;
+            font-weight: bold;
+        }
+        .rate-limit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        .rate-limit-item {
+            background: #e7f3ff;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        .rate-limit-value {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #007bff;
+        }
+        .auth-box {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .support-box {
+            background: #d1ecf1;
+            border: 1px solid #b8daff;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 15px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: #6c757d;
+            border-top: 1px solid #dee2e6;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🔌 VlogClip AI Business API</h1>
+        <p>Complete Developer Documentation</p>
+        <p>Version 1.0 | Business Plan Exclusive</p>
+    </div>
+
+    <div class="section">
+        <h2>📖 Overview</h2>
+        <p>The VlogClip AI Business API allows you to integrate our powerful YouTube video processing capabilities directly into your applications. Transform long-form YouTube videos into engaging short clips programmatically.</p>
+        
+        <h3>🚀 Key Features</h3>
+        <ul>
+            <li><strong>AI-Powered Clip Generation:</strong> Automatically identify the most engaging segments</li>
+            <li><strong>Batch Processing:</strong> Process multiple videos simultaneously</li>
+            <li><strong>High-Quality Output:</strong> 4K UHD resolution for Business plan users</li>
+            <li><strong>Custom Duration:</strong> 15s, 20s, 30s, or 60s clips</li>
+            <li><strong>Portrait Optimization:</strong> Perfect for TikTok, Instagram Reels, YouTube Shorts</li>
+            <li><strong>Real-time Progress:</strong> Track processing status</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>📊 Rate Limits & Usage</h2>
+        <div class="rate-limit-grid">
+            <div class="rate-limit-item">
+                <div class="rate-limit-value">100</div>
+                <div>Requests per Minute</div>
+            </div>
+            <div class="rate-limit-item">
+                <div class="rate-limit-value">1000</div>
+                <div>Videos per Day</div>
+            </div>
+            <div class="rate-limit-item">
+                <div class="rate-limit-value">6</div>
+                <div>Max Batch Size</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🔐 Authentication</h2>
+        <div class="auth-box">
+            <h3>Current Authentication</h3>
+            <p><strong>Method:</strong> Plan-based access (include <code>plan: "business"</code> in request body)</p>
+            <p><strong>Future:</strong> Bearer token authentication (coming soon)</p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🛠️ Available Endpoints</h2>
+
+        <div class="endpoint">
+            <h3>
+                <span class="method post">POST</span>
+                <code>/api/generate</code>
+            </h3>
+            <p><strong>Description:</strong> Generate clips from a single YouTube video</p>
+            
+            <h4>Request Parameters:</h4>
+            <table class="parameter-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>videoUrl</code></td>
+                        <td>string</td>
+                        <td>✅ Yes</td>
+                        <td>YouTube video URL</td>
+                    </tr>
+                    <tr>
+                        <td><code>customDuration</code></td>
+                        <td>integer</td>
+                        <td>❌ No</td>
+                        <td>Clip duration in seconds (15, 20, 30, 60). Default: 15</td>
+                    </tr>
+                    <tr>
+                        <td><code>plan</code></td>
+                        <td>string</td>
+                        <td>✅ Yes</td>
+                        <td>User plan ("business" for API access)</td>
+                    </tr>
+                    <tr>
+                        <td><code>portraitMode</code></td>
+                        <td>boolean</td>
+                        <td>❌ No</td>
+                        <td>Enable portrait mode. Default: true</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Example Request:</h4>
+            <div class="code-block">curl -X POST http://localhost:3001/api/generate \
+  -H "Content-Type: application/json" \
+  -d '{
+    "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+    "customDuration": 30,
+    "plan": "business",
+    "portraitMode": true
+  }'</div>
+
+            <h4>Example Response:</h4>
+            <div class="code-block">{
+  "clips": [
+    {
+      "headline": "Opening Hook - Most Critical 30 Seconds",
+      "timestamp": "00:00:10 - 00:00:40",
+      "engagement_score": 0.92,
+      "file": "/uploads/clip_dQw4w9WgXcQ_1234567890_segment_1.mp4",
+      "videoUrl": "/uploads/clip_dQw4w9WgXcQ_1234567890_segment_1.mp4",
+      "captions": {
+        "tiktok": "🔥 This opening will hook you! #Viral #MustWatch",
+        "twitter": "The perfect opening moment that grabs attention instantly."
+      }
+    }
+  ]
+}</div>
+        </div>
+
+        <div class="endpoint">
+            <h3>
+                <span class="method post">POST</span>
+                <code>/api/generate/batch</code>
+            </h3>
+            <p><strong>Description:</strong> Process multiple YouTube videos simultaneously</p>
+            
+            <h4>Request Parameters:</h4>
+            <table class="parameter-table">
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Type</th>
+                        <th>Required</th>
+                        <th>Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>videoUrls</code></td>
+                        <td>array</td>
+                        <td>✅ Yes</td>
+                        <td>Array of YouTube video URLs (max 6)</td>
+                    </tr>
+                    <tr>
+                        <td><code>customDuration</code></td>
+                        <td>integer</td>
+                        <td>❌ No</td>
+                        <td>Clip duration in seconds (15, 20, 30, 60). Default: 15</td>
+                    </tr>
+                    <tr>
+                        <td><code>plan</code></td>
+                        <td>string</td>
+                        <td>✅ Yes</td>
+                        <td>User plan ("business" for API access)</td>
+                    </tr>
+                    <tr>
+                        <td><code>portraitMode</code></td>
+                        <td>boolean</td>
+                        <td>❌ No</td>
+                        <td>Enable portrait mode. Default: true</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h4>Example Request:</h4>
+            <div class="code-block">curl -X POST http://localhost:3001/api/generate/batch \
+  -H "Content-Type: application/json" \
+  -d '{
+    "videoUrls": [
+      "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+      "https://www.youtube.com/watch?v=jNQXAC9IVRw"
+    ],
+    "customDuration": 30,
+    "plan": "business",
+    "portraitMode": true
+  }'</div>
+        </div>
+
+        <div class="endpoint">
+            <h3>
+                <span class="method get">GET</span>
+                <code>/api/progress</code>
+            </h3>
+            <p><strong>Description:</strong> Get real-time processing progress</p>
+            
+            <h4>Example Request:</h4>
+            <div class="code-block">curl -X GET http://localhost:3001/api/progress</div>
+
+            <h4>Example Response:</h4>
+            <div class="code-block">{
+  "status": "processing",
+  "step": "cutting_video",
+  "progress": 75,
+  "message": "Creating real video clips..."
+}</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>🧪 Testing Your Integration</h2>
+        <h3>Quick Test (Browser Console)</h3>
+        <div class="code-block">fetch('http://localhost:3001/api/generate', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify({
+    videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    customDuration: 15,
+    plan: 'business'
+  })
+})
+.then(response => response.json())
+.then(data => console.log(data));</div>
+
+        <h3>Node.js Example</h3>
+        <div class="code-block">const axios = require('axios');
+
+async function generateClips() {
+  try {
+    const response = await axios.post('http://localhost:3001/api/generate', {
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      customDuration: 30,
+      plan: 'business',
+      portraitMode: true
+    });
+    
+    console.log('Generated clips:', response.data.clips);
+  } catch (error) {
+    console.error('Error:', error.response?.data || error.message);
+  }
+}
+
+generateClips();</div>
+
+        <h3>Python Example</h3>
+        <div class="code-block">import requests
+import json
+
+def generate_clips():
+    url = "http://localhost:3001/api/generate"
+    payload = {
+        "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
+        "customDuration": 30,
+        "plan": "business",
+        "portraitMode": True
+    }
+    
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+        
+        data = response.json()
+        print("Generated clips:", json.dumps(data["clips"], indent=2))
+    except requests.exceptions.RequestException as e:
+        print(f"Error: {e}")
+
+generate_clips()</div>
+    </div>
+
+    <div class="section">
+        <h2>📱 Video Specifications</h2>
+        <h3>Business Plan Output Quality</h3>
+        <ul>
+            <li><strong>Resolution:</strong> High Quality Processing</li>
+            <li><strong>Aspect Ratio:</strong> 9:16 (Portrait)</li>
+            <li><strong>Bitrate:</strong> 8000k</li>
+            <li><strong>Format:</strong> MP4</li>
+            <li><strong>Codec:</strong> H.264</li>
+            <li><strong>Audio:</strong> AAC, 192k</li>
+        </ul>
+
+        <h3>Supported YouTube Formats</h3>
+        <ul>
+            <li>Standard YouTube URLs: <code>https://www.youtube.com/watch?v=VIDEO_ID</code></li>
+            <li>Short URLs: <code>https://youtu.be/VIDEO_ID</code></li>
+            <li>Timestamped URLs: <code>https://www.youtube.com/watch?v=VIDEO_ID&t=30s</code></li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>⚠️ Error Handling</h2>
+        <h3>Common Error Responses</h3>
+        
+        <h4>Invalid YouTube URL</h4>
+        <div class="code-block">{
+  "error": "Please provide a valid YouTube URL"
+}</div>
+
+        <h4>Rate Limit Exceeded</h4>
+        <div class="code-block">{
+  "error": "Rate limit exceeded. Please try again later."
+}</div>
+
+        <h4>Processing Failed</h4>
+        <div class="code-block">{
+  "error": "Video processing failed",
+  "details": "Video download timeout"
+}</div>
+
+        <h3>HTTP Status Codes</h3>
+        <ul>
+            <li><strong>200:</strong> Success</li>
+            <li><strong>400:</strong> Bad Request (invalid parameters)</li>
+            <li><strong>401:</strong> Unauthorized (invalid plan)</li>
+            <li><strong>429:</strong> Rate limit exceeded</li>
+            <li><strong>500:</strong> Internal server error</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>💡 Best Practices</h2>
+        <ul>
+            <li><strong>Validate URLs:</strong> Always validate YouTube URLs before sending requests</li>
+            <li><strong>Handle Timeouts:</strong> Long videos may take 5-10 minutes to process</li>
+            <li><strong>Implement Retry Logic:</strong> Network issues can occur, implement exponential backoff</li>
+            <li><strong>Monitor Progress:</strong> Use the progress endpoint for long-running operations</li>
+            <li><strong>Cache Results:</strong> Generated clips are stored temporarily, download promptly</li>
+            <li><strong>Batch Efficiently:</strong> Use batch processing for multiple videos to improve performance</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2>📞 Support & Resources</h2>
+        <div class="support-box">
+            <h3>Need Help?</h3>
+            <p>Our developer support team is here to help you integrate VlogClip AI successfully.</p>
+            <ul>
+                <li><strong>Developer Support:</strong> Technical questions and integration help</li>
+                <li><strong>Bug Reports:</strong> Report issues or unexpected behavior</li>
+                <li><strong>Feature Requests:</strong> Suggest new API features</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p><strong>VlogClip AI Business API Documentation</strong></p>
+        <p>Generated on: <script>document.write(new Date().toLocaleDateString())</script></p>
+        <p>© 2025 VlogClip AI. Business Plan Exclusive.</p>
+    </div>
+</body>
+</html>
