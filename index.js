@@ -18,6 +18,9 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 require('dotenv').config();
 
+// Stripe Configuration
+const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+
 // Set up FFmpeg with the installed path
 ffmpeg.setFfmpegPath(ffmpegPath);
 
@@ -3471,6 +3474,123 @@ process.on('uncaughtException', (error) => {
 process.on('unhandledRejection', (reason, promise) => {
   console.error('Unhandled Rejection at:', promise, 'reason:', reason);
   // Don't exit the process, just log the error
+});
+
+// ============= STRIPE PAYMENT ENDPOINTS =============
+
+// Create checkout session
+app.post('/api/payments/create-checkout-session', async (req, res) => {
+  try {
+    const { planType, billingPeriod } = req.body;
+    const token = req.headers.authorization?.split(' ')[1];
+    
+    if (!token) {
+      return res.status(401).json({ error: 'Authentication required' });
+    }
+
+    // Get user from token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET || 'vlogclip-ai-secret-key-2024');
+    const user = users.get(decoded.email);
+    
+    if (!user) {
+      return res.status(404).json({ error: 'User not found' });
+    }
+
+    // Define price IDs
+    const priceIds = {
+      pro: {
+        monthly: process.env.STRIPE_PRICE_PRO_MONTHLY,
+        yearly: process.env.STRIPE_PRICE_PRO_YEARLY
+      },
+      business: {
+        monthly: process.env.STRIPE_PRICE_BUSINESS_MONTHLY,
+        yearly: process.env.STRIPE_PRICE_BUSINESS_YEARLY
+      }
+    };
+
+    const priceId = priceIds[planType]?.[billingPeriod];
+    
+    if (!priceId) {
+      return res.status(400).json({ error: 'Invalid plan or billing period' });
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      payment_method_types: ['card'],
+      line_items: [{
+        price: priceId,
+        quantity: 1,
+      }],
+      mode: 'subscription',
+      success_url: `https://vlogclipai.com/dashboard?payment=success`,
+      cancel_url: `https://vlogclipai.com/dashboard?payment=cancelled`,
+      metadata: {
+        userId: user.id || user.email,
+        planType: planType,
+        billingPeriod: billingPeriod
+      },
+      client_reference_id: user.email
+    });
+
+    res.json({ url: session.url });
+  } catch (error) {
+    console.error('Stripe checkout error:', error);
+    res.status(500).json({ error: 'Failed to create checkout session' });
+  }
+});
+
+// Stripe webhook handler
+app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), async (req, res) => {
+  const sig = req.headers['stripe-signature'];
+  
+  try {
+    const event = stripe.webhooks.constructEvent(
+      req.body,
+      sig,
+      process.env.STRIPE_WEBHOOK_SECRET
+    );
+
+    switch (event.type) {
+      case 'checkout.session.completed':
+        const session = event.data.object;
+        const userEmail = session.client_reference_id;
+        const planType = session.metadata.planType;
+        
+        // Update user's plan
+        const user = users.get(userEmail);
+        if (user) {
+          user.plan = planType;
+          user.subscriptionId = session.subscription;
+          user.stripeCustomerId = session.customer;
+          users.set(userEmail, user);
+          console.log(`✅ User ${userEmail} upgraded to ${planType}`);
+        }
+        break;
+        
+      case 'customer.subscription.deleted':
+        const subscription = event.data.object;
+        // Find user by subscription ID and downgrade
+        for (const [email, userData] of users.entries()) {
+          if (userData.subscriptionId === subscription.id) {
+            userData.plan = 'free';
+            userData.subscriptionId = null;
+            users.set(email, userData);
+            console.log(`⬇️ User ${email} downgraded to free`);
+            break;
+          }
+        }
+        break;
+    }
+
+    res.json({ received: true });
+  } catch (error) {
+    console.error('Webhook error:', error);
+    res.status(400).json({ error: 'Webhook error' });
+  }
+});
+
+// Serve frontend for all other routes
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
 });
 
 
