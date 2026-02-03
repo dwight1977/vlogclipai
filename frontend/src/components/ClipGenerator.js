@@ -244,7 +244,7 @@ const ClipGenerator = () => {
                 // Try to get the results from the last-clips endpoint
                 setTimeout(async () => {
                   try {
-                    const clipsResponse = await fetch('http://localhost:3001/api/last-clips');
+                    const clipsResponse = await fetch('/api/last-clips');
                     const clipsData = await clipsResponse.json();
                     if (clipsData.clips && clipsData.clips.length > 0) {
                       setClips(clipsData.clips);
@@ -317,9 +317,9 @@ const ClipGenerator = () => {
       
       // Create multiple download attempts
       const downloadUrls = [
-        `http://localhost:3001/api/download/${fileName}`,
         `/api/download/${fileName}`,
-        `http://localhost:3001${fileUrl}`,
+        `/api/download/${fileName}`,
+        `${fileUrl}`,
         fileUrl
       ];
       

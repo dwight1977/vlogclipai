@@ -13,7 +13,7 @@ const getApiBaseUrl = () => {
   }
   
   // For local development, use localhost
-  return 'http://localhost:3001';
+  return '';
 };
 
 export const API_BASE_URL = getApiBaseUrl();

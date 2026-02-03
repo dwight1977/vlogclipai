@@ -110,7 +110,7 @@ const BatchProcessor = () => {
     // Method 1: Try nuclear binary download
     try {
       console.log('🔧 Method 1: Nuclear binary download');
-      const response = await fetch(`http://localhost:3001/api/download/${videoFilename}`);
+      const response = await fetch(`/api/download/${videoFilename}`);
       
       if (response.ok) {
         const blob = await response.blob();
@@ -136,7 +136,7 @@ const BatchProcessor = () => {
     try {
       console.log('🔧 Method 2: ZIP download');
       const link = document.createElement('a');
-      link.href = `http://localhost:3001/api/download-zip/${videoFilename}`;
+      link.href = `/api/download-zip/${videoFilename}`;
       link.download = videoFilename.replace('.mp4', '.zip');
       link.target = '_blank';
       document.body.appendChild(link);
@@ -154,7 +154,7 @@ const BatchProcessor = () => {
     try {
       console.log('🔧 Method 3: Fallback download');
       const link = document.createElement('a');
-      link.href = `http://localhost:3001/uploads/${videoFilename}`;
+      link.href = `/uploads/${videoFilename}`;
       link.download = filename || videoFilename;
       link.target = '_blank';
       document.body.appendChild(link);
@@ -246,7 +246,7 @@ const BatchProcessor = () => {
     // Start progress tracking
     const progressInterval = setInterval(async () => {
       try {
-        const response = await fetch('http://localhost:3001/api/progress');
+        const response = await fetch('/api/progress');
         if (response.ok) {
           const data = await response.json();
           updateProgress(data);
@@ -263,7 +263,7 @@ const BatchProcessor = () => {
     }, 1000);
 
     try {
-      const response = await fetch('http://localhost:3001/api/generate/batch', {
+      const response = await fetch('/api/generate/batch', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -545,7 +545,7 @@ const BatchProcessor = () => {
                             onPlay={(e) => e.target.pause()}
                             onLoadedMetadata={(e) => e.target.currentTime = 2}
                           >
-                            <source src={`http://localhost:3001${clip.videoUrl}`} type="video/mp4" />
+                            <source src={`${clip.videoUrl}`} type="video/mp4" />
                           </video>
                           <div className="preview-overlay">
                             <div className="play-preview-text">Preview</div>
@@ -609,7 +609,7 @@ const BatchProcessor = () => {
                     loop
                     muted
                   >
-                    <source src={`http://localhost:3001${selectedVideo.videoUrl}`} type="video/mp4" />
+                    <source src={`${selectedVideo.videoUrl}`} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                   

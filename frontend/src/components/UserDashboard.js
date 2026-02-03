@@ -80,7 +80,7 @@ const UserDashboard = ({ onNavigateToApp }) => {
   const fetchUserAnalytics = async () => {
     try {
       const token = localStorage.getItem('auth_token');
-      const response = await fetch('http://localhost:3001/api/user/analytics', {
+      const response = await fetch('/api/user/analytics', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

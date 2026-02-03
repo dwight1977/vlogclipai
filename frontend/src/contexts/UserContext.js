@@ -148,7 +148,7 @@ export const UserProvider = ({ children }) => {
   // Verify token and load authenticated user data
   const verifyTokenAndLoadUser = async (token, deviceId, deviceFingerprint) => {
     try {
-      const response = await fetch('http://localhost:3001/api/auth/me', {
+      const response = await fetch('/api/auth/me', {
         headers: {
           'Authorization': `Bearer ${token}`
         }

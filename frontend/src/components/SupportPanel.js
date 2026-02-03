@@ -290,7 +290,7 @@ const SupportPanel = () => {
                 description: 'Process the returned clip data and implement proper error handling.'
               }
             ],
-            example: `curl -X POST http://localhost:3001/api/generate \\
+            example: `curl -X POST /api/generate \\
   -H "Content-Type: application/json" \\
   -d '{
     "videoUrl": "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
@@ -629,7 +629,7 @@ const SupportPanel = () => {
 
       // Send email via API
       try {
-        const response = await fetch('http://localhost:3001/api/send-support-email', {
+        const response = await fetch('/api/send-support-email', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',

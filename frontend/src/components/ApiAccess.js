@@ -21,7 +21,7 @@ const ApiAccess = () => {
     setError('');
 
     try {
-      const response = await fetch(`http://localhost:3001/api/access?plan=${user.plan}`, {
+      const response = await fetch(`/api/access?plan=${user.plan}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -80,7 +80,7 @@ const ApiAccess = () => {
   };
 
   const generateCurlExample = (endpoint, method, example) => {
-    const baseUrl = 'http://localhost:3001';
+    const baseUrl = '';
     
     if (method === 'POST') {
       return `curl -X POST ${baseUrl}${endpoint} \\
@@ -250,7 +250,7 @@ const ApiAccess = () => {
         <h4>🧪 Quick Test</h4>
         <p>Test the API directly from your browser's developer console:</p>
         <pre className="code-block">
-          <code>{`fetch('http://localhost:3001/api/generate', {
+          <code>{`fetch('/api/generate', {
   method: 'POST',
   headers: { 'Content-Type': 'application/json' },
   body: JSON.stringify({

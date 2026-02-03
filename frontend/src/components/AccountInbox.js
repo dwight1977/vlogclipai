@@ -67,7 +67,7 @@ const AccountInbox = ({ onBack }) => {
 
       console.log(`📧 Fetching inbox messages for Account ID: ${accountId}`);
       
-      const response = await fetch(`http://localhost:3001/api/inbox/${accountId}`, {
+      const response = await fetch(`/api/inbox/${accountId}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -191,7 +191,7 @@ Your inbox is now polling vlogclipai@gmail.com every 15 seconds`,
       if (accountId) {
         console.log(`📧 Clearing all messages for Account ID: ${accountId}`);
         
-        const response = await fetch(`http://localhost:3001/api/inbox/${accountId}/clear`, {
+        const response = await fetch(`/api/inbox/${accountId}/clear`, {
           method: 'DELETE',
           headers: {
             'Content-Type': 'application/json',
@@ -320,7 +320,7 @@ Senior API Engineer, VlogClip AI`
     // Also update API if available
     if (accountId) {
       try {
-        const response = await fetch(`http://localhost:3001/api/inbox/${accountId}/mark-read`, {
+        const response = await fetch(`/api/inbox/${accountId}/mark-read`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
@@ -351,7 +351,7 @@ Senior API Engineer, VlogClip AI`
     
     try {
       // Send email via API
-      const response = await fetch('http://localhost:3001/api/send-inbox-email', {
+      const response = await fetch('/api/send-inbox-email', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
