@@ -1,14 +1,18 @@
 // API Configuration
 // Centralized API URL management for different environments
-
 const getApiBaseUrl = () => {
   // Check for environment variable first
   if (process.env.REACT_APP_API_URL) {
     return process.env.REACT_APP_API_URL;
   }
   
-  // For local development/testing, always use localhost
-  // In production, this should be set via REACT_APP_API_URL environment variable
+  // In production, use the same origin (relative URLs)
+  // This works because frontend and backend are served from the same domain
+  if (window.location.hostname !== 'localhost') {
+    return '';  // Empty string means use relative URLs (same origin)
+  }
+  
+  // For local development, use localhost
   return 'http://localhost:3001';
 };
 
