@@ -684,7 +684,7 @@ const ClipGenerator = () => {
                         poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 640 360'%3E%3Crect width='640' height='360' fill='%23667eea'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='24' font-family='Arial'%3E🎬 Loading Video...%3C/text%3E%3C/svg%3E"
                       >
                         <source src={`${clip.file}`} type="video/mp4" />
-                        <source src={`http://127.0.0.1:3001${clip.file}`} type="video/mp4" />
+                        <source src={`${clip.file}`} type="video/mp4" />
                         <source src={clip.file} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
@@ -807,7 +807,7 @@ const ClipGenerator = () => {
                     poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1080 1920'%3E%3Crect width='1080' height='1920' fill='%23667eea'/%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' fill='white' font-size='32' font-family='Arial'%3E🎬 VlogClip AI%3C/text%3E%3C/svg%3E"
                   >
                     <source src={`${selectedClip.file}`} type="video/mp4" />
-                    <source src={`http://127.0.0.1:3001${selectedClip.file}`} type="video/mp4" />
+                    <source src={`${selectedClip.file}`} type="video/mp4" />
                     Your browser does not support the video tag.
                   </video>
                   
@@ -862,7 +862,7 @@ const ClipGenerator = () => {
                 <div className="modal-action-buttons">
                   <button 
                     className="download-video-btn"
-                    onClick={() => downloadVideo(`http://127.0.0.1:3001${selectedClip.file}`, `vlogclip_${selectedClip.index + 1}.mp4`)}
+                    onClick={() => downloadVideo(`${selectedClip.file}`, `vlogclip_${selectedClip.index + 1}.mp4`)}
                   >
                     Download Video
                   </button>
