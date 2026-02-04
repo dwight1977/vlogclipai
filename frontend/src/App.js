@@ -12,6 +12,8 @@ import SupportPanel from './components/SupportPanel';
 // Removed AccountInbox component - using direct email replies instead
 import AIInsightsPanel from './components/AIInsightsPanel';
 import PlanDetailsPanel from './components/PlanDetailsPanel';
+import TermsOfService from './components/TermsOfService';
+import PrivacyPolicy from './components/PrivacyPolicy';
 import { UserProvider, useUser } from './contexts/UserContext';
 import { CurrencyProvider } from './contexts/CurrencyContext';
 import { ProcessingProvider } from './contexts/ProcessingContext';
@@ -138,6 +140,8 @@ const AppContent = () => {
             {currentView === 'plan-free' && <PlanDetailsPanel plan="free" />}
             {currentView === 'plan-pro' && <PlanDetailsPanel plan="pro" />}
             {currentView === 'plan-business' && <PlanDetailsPanel plan="business" />}
+            {currentView === 'terms' && <TermsOfService />}
+            {currentView === 'privacy' && <PrivacyPolicy />}
           </main>
         </div>
       </div>
@@ -317,7 +321,12 @@ const AppContent = () => {
 
           <footer className="footer">
             <div className="footer-content">
-              <p>© 2024 VlogClip AI - Powered by OpenAI & FFmpeg</p>
+              <p>© 2026 VlogClip AI - Powered by OpenAI & FFmpeg</p>
+              <div className="legal-links">
+                <a href="/terms" onClick={(e) => { e.preventDefault(); handleNavigateToApp('terms'); }}>Terms of Service</a>
+                <span className="separator">|</span>
+                <a href="/privacy" onClick={(e) => { e.preventDefault(); handleNavigateToApp('privacy'); }}>Privacy Policy</a>
+              </div>
               <div className="social-links">
                 <span className="social-link">📱 TikTok Ready</span>
                 <span className="social-link">🐦 Twitter Optimized</span>

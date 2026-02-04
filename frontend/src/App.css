@@ -465,3 +465,23 @@ body {
 }
 
 @import './components/ClipGenerator.css';
+/* Legal Links in Footer */
+.legal-links {
+  margin: 10px 0;
+}
+
+.legal-links a {
+  color: #888;
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: color 0.3s ease;
+}
+
+.legal-links a:hover {
+  color: #667eea;
+}
+
+.legal-links .separator {
+  margin: 0 10px;
+  color: #555;
+}
