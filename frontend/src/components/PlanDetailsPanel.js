@@ -100,19 +100,38 @@ const PlanDetailsPanel = ({ plan }) => {
   const isUpgrade = user.plan === 'free' && selectedPlan !== 'free' || user.plan === 'pro' && selectedPlan === 'business';
   const isDowngrade = user.plan === 'business' && selectedPlan !== 'business' || user.plan === 'pro' && selectedPlan === 'free';
 
-  const handleAction = () => {
+  const handleAction = async () => {
     if (isCurrentPlan) {
-      // Show current plan details
       return;
     } else if (isUpgrade) {
-      // Handle upgrade
-      console.log(`Upgrading to ${selectedPlan}`);
-      // This would typically integrate with Stripe
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch('/api/payments/create-checkout-session', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+          },
+          body: JSON.stringify({
+            planType: selectedPlan,
+            billingPeriod: billingCycle
+          })
+        });
+        const data = await response.json();
+        if (data.url) {
+          window.location.href = data.url;
+        } else {
+          alert('Failed to start checkout.');
+        }
+      } catch (error) {
+        console.error('Checkout error:', error);
+        alert('Checkout failed. Please try again.');
+      }
     } else if (isDowngrade) {
-      // Handle downgrade
-      console.log(`Downgrading to ${selectedPlan}`);
+      alert('Please contact support to downgrade.');
     }
   };
+
 
   const handlePlanClick = (planKey) => {
     setSelectedPlan(planKey);
