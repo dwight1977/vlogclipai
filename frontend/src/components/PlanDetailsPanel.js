@@ -105,7 +105,7 @@ const PlanDetailsPanel = ({ plan }) => {
       return;
     } else if (isUpgrade) {
       try {
-        const token = localStorage.getItem('token');
+        const token = localStorage.getItem('auth_token');
         const response = await fetch('/api/payments/create-checkout-session', {
           method: 'POST',
           headers: {
