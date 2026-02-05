@@ -1380,7 +1380,7 @@ const findVideoHotspots = async (videoUrl, transcript, clipDuration = 15) => {
   
   try {
     // 1. Download video metadata with anti-detection measures
-    const ytDlpPath = '/Library/Frameworks/Python.framework/Versions/3.13/bin/yt-dlp';
+    const ytDlpPath = '/usr/local/bin/yt-dlp';
     
     // Multiple strategies to avoid rate limiting
     const metadataStrategies = [
@@ -2301,7 +2301,7 @@ app.post('/api/generate', async (req, res) => {
         // Approach 2: Emergency rate limit bypass with CAT iOS client
         if (!audioDownloaded) {
           try {
-            const ytDlpPath = '/Library/Frameworks/Python.framework/Versions/3.13/bin/yt-dlp';
+            const ytDlpPath = '/usr/local/bin/yt-dlp';
             // Use CAT iOS bypass to avoid rate limiting
             const cmd = `"${ytDlpPath}" --extract-audio --audio-format mp3 --user-agent "Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15" --extractor-args "youtube:player_client=ios" --no-warnings -o "${audioPath}" "${videoUrl}"`;
             
@@ -3589,9 +3589,6 @@ app.post('/api/payments/webhook', express.raw({ type: 'application/json' }), asy
 });
 
 // Serve frontend for all other routes
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'frontend/build', 'index.html'));
-});
 
 
 // Start server with enhanced stability
