@@ -7,7 +7,7 @@ const EnhancedProxySystem = require('./enhanced-proxy-system');
 // New YouTube helper that uses yt-dlp exclusively
 class YouTubeHelper {
   constructor() {
-    this.ytDlpPath = '/Library/Frameworks/Python.framework/Versions/3.13/bin/yt-dlp';
+    this.ytDlpPath = '/usr/local/bin/yt-dlp';
     this.proxySystem = new EnhancedProxySystem();
     
     // DR. ALEX: Optimized strategies - Android client is most reliable
